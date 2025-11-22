@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mahnoor! 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 50%, #ff7675 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Floating balloons background */
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 60px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .balloon:nth-child(1) { background: #ff6b9d; left: 10%; animation-delay: 0s; }
+        .balloon:nth-child(2) { background: #74b9ff; left: 30%; animation-delay: 1s; }
+        .balloon:nth-child(3) { background: #a29bfe; left: 50%; animation-delay: 2s; }
+        .balloon:nth-child(4) { background: #ffeaa7; left: 70%; animation-delay: 3s; }
+        .balloon:nth-child(5) { background: #55efc4; left: 90%; animation-delay: 1.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); }
+            50% { transform: translateY(-20vh) rotate(180deg); }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f368e0;
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Envelope */
+        .envelope-wrapper {
+            perspective: 1000px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            transition: transform 0.6s;
+        }
+
+        @media (max-width: 768px) {
+            .envelope {
+                width: 250px;
+                height: 170px;
+            }
+        }
+
+        .envelope-back {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border: 3px solid #ff6b9d;
+            border-radius: 10px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .envelope-logo {
+            font-size: 60px;
+            z-index: 3;
+            transition: opacity 0.3s;
+            position: relative;
+        }
+
+        .envelope.open .envelope-logo {
+            opacity: 0;
+        }
+
+        /* Cake decoration on envelope */
+        .envelope-decoration {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            z-index: 3;
+            transition: opacity 0.3s;
+        }
+
+        .envelope.open .envelope-decoration {
+            opacity: 0;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #ff6b9d;
+            transform-origin: top center;
+            transition: transform 0.6s;
+            z-index: 2;
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        /* Card */
+        .card {
+            position: absolute;
+            width: 280px;
+            height: 400px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+            transition: transform 0.8s ease, opacity 0.3s;
+            z-index: 1;
+            padding: 30px;
+            text-align: center;
+            border: 3px solid #ff6b9d;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .envelope.open .card {
+            transform: translate(-50%, -95%);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                width: 240px;
+                height: 360px;
+                padding: 20px;
+            }
+            
+            .envelope.open .card {
+                transform: translate(-50%, -85%);
+            }
+        }
+
+        /* Cake */
+        .cake-container {
+            margin: 20px 0;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.6s ease 0.8s;
+        }
+
+        .envelope.open .cake-container {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .cake {
+            width: 120px;
+            height: 100px;
+            background: linear-gradient(to bottom, #ff6b9d 0%, #ff8fa3 100%);
+            border-radius: 10px 10px 0 0;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .cake::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: #ffeaa7;
+            border-radius: 10px;
+        }
+
+        .cake::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: #ff4757;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .candles {
+            display: flex;
+            justify-content: space-around;
+            position: absolute;
+            top: -35px;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .candle {
+            width: 8px;
+            height: 25px;
+            background: linear-gradient(to bottom, #ffeaa7, #fdcb6e);
+            border-radius: 3px 3px 0 0;
+            position: relative;
+        }
+
+        .flame {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 18px;
+            background: #ff6348;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 0.3s ease-in-out infinite alternate;
+        }
+
+        .flame::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 10px;
+            background: #ffa502;
+            border-radius: 50%;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.1) translateY(-2px); }
+        }
+
+        /* Reveal button */
+        .reveal-btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #ff6b9d, #ff8fa3);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .envelope.open .reveal-btn {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 1.2s;
+        }
+
+        .reveal-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.6);
+        }
+
+        /* Message */
+        .message {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message h1 {
+            color: #ff6b9d;
+            font-size: 32px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .message p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        /* Full screen message overlay */
+        .message-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.6s ease;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+
+        .message-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .message-card {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 50%, #ff7675 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            border: 4px solid #ff6b9d;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .message-card h1 {
+            color: #fff;
+            font-size: 36px;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .message-card p {
+            color: #fff;
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .message-card {
+                padding: 30px 20px;
+                max-width: 90%;
+            }
+            
+            .message-card h1 {
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+            
+            .message-card p {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+            
+            .envelope-logo {
+                font-size: 50px;
+            }
+            
+            .envelope-decoration {
+                font-size: 35px;
+            }
+            
+            .cake {
+                width: 100px;
+                height: 85px;
+            }
+            
+            .reveal-btn {
+                font-size: 14px;
+                padding: 10px 25px;
+            }
+        }
+
+        .container.blur {
+            filter: blur(8px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .instruction {
+            position: absolute;
+            top: 20px;
+            color: white;
+            font-size: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .instruction.hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+
+    <div class="instruction" id="instruction">Click the envelope! 💌</div>
+
+    <div class="container" id="container">
+        <div class="envelope-wrapper" onclick="openEnvelope()">
+            <div class="envelope" id="envelope">
+                <div class="envelope-back">
+                    <div class="envelope-logo">🎂</div>
+                    <div class="envelope-decoration">🎂</div>
+                </div>
+                <div class="envelope-flap"></div>
+                
+                <div class="card">
+                    <div class="cake-container">
+                        <div class="cake">
+                            <div class="candles">
+                                <div class="candle"><div class="flame"></div></div>
+                                <div class="candle"><div class="flame"></div></div>
+                                <div class="candle"><div class="flame"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="reveal-btn" onclick="revealMessage(event)">
+                        🎂 Make a Wish! 🎂
+                    </button>
+                    
+                    <div class="message" id="message">
+                        <h1>Happy Birthday Mahnoor! 🎉</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="message-overlay" id="messageOverlay">
+        <div class="message-card">
+            <h1>Happy Birthday Mahnoor! 🎉</h1>
+            <p>
+                I hope we continue to be eachothers best friend forever. Whatever happens, the time we spent with eachother will never be forgotten. Even if one day we starts to grow distant, know that I'll always be there for you. (Hope that day will never come) Happy Birthday gurll 💕<br><br>
+                Even if I forget you (Allah naw karay), the teas you spilled and the gossips we shared will never be forgotten, I know uhh are non-chalant 😎<br><br>
+                Chal ab nikal bht h gya 😂<br><br>
+                <strong>Happy Birthday babyyyyyyy gurllll! 🎂🎈✨</strong>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Create confetti
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = ['#ff6b9d', '#74b9ff', '#a29bfe', '#ffeaa7', '#55efc4'][Math.floor(Math.random() * 5)];
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                confetti.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                document.body.appendChild(confetti);
+            }
+        }
+
+        createConfetti();
+
+        let isOpen = false;
+
+        function openEnvelope() {
+            if (!isOpen) {
+                document.getElementById('envelope').classList.add('open');
+                document.getElementById('instruction').classList.add('hide');
+                isOpen = true;
+            }
+        }
+
+        function revealMessage(event) {
+            event.stopPropagation();
+            document.getElementById('messageOverlay').classList.add('show');
+            document.getElementById('container').classList.add('blur');
+        }
+    </script>
+</body>
+</html>
